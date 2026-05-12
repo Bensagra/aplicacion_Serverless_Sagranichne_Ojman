@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Text, Pressable, Animated } from "react-native";
 
 type Food = {
@@ -41,10 +41,7 @@ export default function FoodCard({ food, selected, onPress }: Props) {
       >
         <Text style={{ fontSize: 18, fontWeight: "bold" }}>{food.name}</Text>
         <Text style={{ opacity: 0.7 }}>{food.category}</Text>
-
-        <Text style={{ marginTop: 5, fontWeight: "bold" }}>
-          ${food.price}
-        </Text>
+        <Text style={{ marginTop: 5, fontWeight: "bold" }}>${food.price}</Text>
       </Animated.View>
     </Pressable>
   );
