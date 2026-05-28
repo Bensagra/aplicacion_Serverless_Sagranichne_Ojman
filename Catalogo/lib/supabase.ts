@@ -12,9 +12,19 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
+const isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+
+const noopStorage = {
+  getItem: async (_key: string) => null,
+  setItem: async (_key: string, _value: string) => {},
+  removeItem: async (_key: string) => {},
+};
+
+const storage = Platform.OS === 'web' ? (isBrowser ? AsyncStorage : noopStorage) : AsyncStorage;
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    storage: AsyncStorage,
+    storage,
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: Platform.OS === 'web',
