@@ -20,6 +20,7 @@ type Props = {
 
 export default function FoodCard({ food, selected, onPress, onEdit, onDelete }: Props) {
   const scale = useRef(new Animated.Value(1)).current;
+  const formattedPrice = `$${Number(food.price || 0).toFixed(0)}`;
 
   useEffect(() => {
     Animated.spring(scale, {
@@ -27,7 +28,7 @@ export default function FoodCard({ food, selected, onPress, onEdit, onDelete }: 
       useNativeDriver: true,
       friction: 6,
     }).start();
-  }, [selected]);
+  }, [scale, selected]);
 
   return (
     <Pressable onPress={onPress}>
@@ -47,7 +48,7 @@ export default function FoodCard({ food, selected, onPress, onEdit, onDelete }: 
           <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#111' }}>{food.name}</Text>
             <Text style={{ opacity: 0.7, marginTop: 2 }}>{food.category}</Text>
-            <Text style={{ marginTop: 6, fontWeight: 'bold', color: '#ff6b00' }}>${food.price}</Text>
+            <Text style={{ marginTop: 6, fontWeight: 'bold', color: '#ff6b00' }}>{formattedPrice}</Text>
             {selected && food.notes ? (
               <Text style={{ marginTop: 8, color: '#555', fontStyle: 'italic' }}>{food.notes}</Text>
             ) : null}
