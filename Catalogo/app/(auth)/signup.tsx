@@ -35,12 +35,18 @@ export default function SignupScreen() {
     }
     setLoading(true);
     try {
-      await signUp(email.trim(), password);
-      Alert.alert(
-        'Cuenta creada',
-        'Si tu proyecto Supabase requiere confirmación por email, revisá tu casilla antes de iniciar sesión.',
-        [{ text: 'OK', onPress: () => router.replace('/(auth)/login') }]
-      );
+      const newSession = await signUp(email.trim(), password);
+      if (newSession) {
+        Alert.alert('Cuenta creada', 'Ya podés cargar tu catálogo.', [
+          { text: 'OK', onPress: () => router.replace('/(tabs)') },
+        ]);
+      } else {
+        Alert.alert(
+          'Cuenta creada',
+          'Revisá tu email para confirmar la cuenta antes de iniciar sesión.',
+          [{ text: 'OK', onPress: () => router.replace('/(auth)/login') }]
+        );
+      }
     } catch (err: any) {
       Alert.alert('No pudimos crear la cuenta', err?.message ?? 'Error desconocido');
     } finally {
