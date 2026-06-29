@@ -17,7 +17,7 @@ function AuthGate() {
     } else if (session && inAuthGroup) {
       router.replace('/(tabs)');
     }
-  }, [session, loading, segments]);
+  }, [session, loading, router, segments]);
 
   if (loading) {
     return (
