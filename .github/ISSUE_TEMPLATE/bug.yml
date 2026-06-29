@@ -1,0 +1,26 @@
+name: Bug
+description: Registrar un problema reproducible antes de corregirlo
+title: "fix: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema
+      description: Qué ocurre y cuál era el comportamiento esperado.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Pasos para reproducir
+      description: Incluir datos, plataforma y pasos mínimos.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Criterios de aceptación
+      description: Cómo se verificará que el problema quedó resuelto.
+    validations:
+      required: true

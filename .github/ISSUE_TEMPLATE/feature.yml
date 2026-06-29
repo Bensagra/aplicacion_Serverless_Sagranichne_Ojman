@@ -1,0 +1,26 @@
+name: Funcionalidad o mejora
+description: Proponer una funcionalidad o mejora antes de implementarla
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objetivo
+      description: Qué problema resuelve y para quién.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Criterios de aceptación
+      description: Lista de comportamientos verificables que debe cumplir.
+    validations:
+      required: true
+  - type: textarea
+    id: quality
+    attributes:
+      label: Estrategia de prueba
+      description: Tests automáticos y verificaciones manuales previstas.
+    validations:
+      required: true
