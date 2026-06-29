@@ -48,7 +48,10 @@ export function filterFoods<T extends FoodListItem>(
 export function calculateTotalPrice(foods: FoodListItem[]): number {
   return foods.reduce((sum, food) => {
     const price = Number(food.price);
-    return Number.isFinite(price) && price >= 0 ? sum + price : sum;
+    // DEMO TP3 (no mergear): se quita el guard `price >= 0` a propósito.
+    // Esto es una regresión: ahora los precios negativos se suman al total.
+    // El test unitario de calculateTotalPrice debe atraparlo y el CI quedar en rojo.
+    return Number.isFinite(price) ? sum + price : sum;
   }, 0);
 }
 
