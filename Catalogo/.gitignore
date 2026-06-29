@@ -8,6 +8,10 @@ node_modules/
 dist/
 web-build/
 expo-env.d.ts
+coverage/
+playwright-report/
+test-results/
+.vercel/
 
 # Native
 .kotlin/

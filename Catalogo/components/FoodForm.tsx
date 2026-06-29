@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import { FOOD_CATEGORIES, validateFoodInput } from '../lib/food';
 
 export type FoodFormValues = {
   name: string;
@@ -24,28 +25,27 @@ type Props = {
   onSubmit: (values: FoodFormValues) => Promise<void>;
 };
 
-const CATEGORIES = ['Desayuno', 'Almuerzo', 'Merienda', 'Cena', 'Postre', 'Bebida', 'Snack'];
-
 export default function FoodForm({ initial, submitLabel, onSubmit }: Props) {
   const [name, setName] = useState(initial?.name ?? '');
-  const [category, setCategory] = useState(initial?.category ?? CATEGORIES[0]);
+  const [category, setCategory] = useState(initial?.category ?? FOOD_CATEGORIES[0]);
   const [price, setPrice] = useState(initial?.price ?? '');
   const [notes, setNotes] = useState(initial?.notes ?? '');
   const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit() {
-    if (!name.trim()) {
-      Alert.alert('Falta el nombre', 'Poné un nombre para la comida');
-      return;
-    }
-    const parsedPrice = Number(price);
-    if (!price || Number.isNaN(parsedPrice) || parsedPrice < 0) {
-      Alert.alert('Precio inválido', 'Tiene que ser un número mayor o igual a 0');
+    const validation = validateFoodInput({ name, price });
+    if (!validation.valid) {
+      Alert.alert(validation.title, validation.message);
       return;
     }
     setSubmitting(true);
     try {
-      await onSubmit({ name: name.trim(), category, price, notes: notes.trim() });
+      await onSubmit({
+        name: validation.name,
+        category,
+        price: String(validation.price),
+        notes: notes.trim(),
+      });
     } catch (err: any) {
       Alert.alert('Error', err?.message ?? 'No se pudo guardar');
     } finally {
@@ -64,7 +64,7 @@ export default function FoodForm({ initial, submitLabel, onSubmit }: Props) {
 
         <Text style={label}>Categoría</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-          {CATEGORIES.map((c) => {
+          {FOOD_CATEGORIES.map((c) => {
             const active = c === category;
             return (
               <Pressable
