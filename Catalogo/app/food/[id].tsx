@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ActivityIndicator, View, Text, Alert } from 'react-native';
+import { ActivityIndicator, View, Alert } from 'react-native';
 import FoodForm from '../../components/FoodForm';
 import { supabase, type Food } from '../../lib/supabase';
 
@@ -22,7 +22,7 @@ export default function EditFoodScreen() {
       setFood(data as Food);
       setLoading(false);
     })();
-  }, [id]);
+  }, [id, router]);
 
   if (loading || !food) {
     return (
