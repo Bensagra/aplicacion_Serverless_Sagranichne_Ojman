@@ -2,7 +2,15 @@
 
 Aplicación móvil (React Native + Expo) con backend **serverless** sobre **Supabase** (Auth + Postgres). Cada usuario puede crear, ver, editar y eliminar su propio catálogo de comidas, con datos persistidos en la nube.
 
-> Trabajo Práctico Nº 2 — Aplicación Serverless.
+> Trabajo Práctico Nº 3 — Calidad y Automatización CI/CD, construido sobre la aplicación serverless del TP2.
+
+## Estado de calidad
+
+El pipeline de GitHub Actions ejecuta `lint → tests unitarios con cobertura → E2E → build → deploy`. El despliegue a producción ocurre únicamente ante un push a `main` después de que todos los controles pasan.
+
+- **Producción:** [https://ivo-3.vercel.app](https://ivo-3.vercel.app)
+- **Decisiones, tests y limitaciones:** [`CALIDAD.md`](CALIDAD.md)
+- **Workflow:** [`.github/workflows/ci-cd.yml`](.github/workflows/ci-cd.yml)
 
 ---
 
@@ -42,6 +50,8 @@ Convenciones:
 - `main` siempre tiene una versión funcional desplegable.
 - Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, …).
 
+Para el TP3, las ramas de trabajo siguen `feature/nombre-corto`, `fix/nombre-corto`, `docs/nombre-corto` o `chore/nombre-corto`. Cada cambio parte de un issue y se integra mediante un PR revisado por el otro integrante.
+
 ---
 
 ## 🚀 Cómo correr el proyecto
@@ -76,6 +86,10 @@ npm run start      # menú interactivo de Expo
 npm run ios        # iOS Simulator
 npm run android    # emulador Android
 npm run web        # versión web (la que se despliega en Vercel)
+npm run lint       # análisis estático
+npm run test:unit  # tests unitarios
+npm run test:e2e   # test E2E en Chromium
+npm run build      # export web de producción
 ```
 
 ---
@@ -88,6 +102,8 @@ La versión web se construye con `expo export -p web` (genera la carpeta `dist/`
 npx expo export -p web
 # luego: vercel --prod  (o conectar el repo en el dashboard de Vercel)
 ```
+
+El deploy automático requiere configurar en GitHub Actions los secrets `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `EXPO_PUBLIC_SUPABASE_URL` y `EXPO_PUBLIC_SUPABASE_ANON_KEY`. Las variables de Supabase también deben estar configuradas en el proyecto de Vercel.
 
 ---
 
